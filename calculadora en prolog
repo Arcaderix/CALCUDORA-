@@ -1,0 +1,38 @@
+% Predicado principal para iniciar la calculadora
+calcular :-
+    write('Bienvenido a la calculadora en Prolog.'), nl,
+    write('Por favor ingrese la operación en notación prefija.'), nl,
+    write('Ejemplo: suma(2, 3)'), nl,
+    write('Operaciones disponibles: suma, resta, multiplicacion, division'), nl,
+    write('Ingrese "salir." para terminar.'), nl,
+    procesar.
+
+% Predicado para procesar las operaciones ingresadas por el usuario
+procesar :-
+    read(Operacion),
+    (
+        Operacion = salir
+        ->  write('Gracias por usar la calculadora en Prolog. ¡Hasta luego!'), nl
+        ;   operar(Operacion, Resultado),
+            write('El resultado es: '), write(Resultado), nl,
+            procesar
+    ).
+
+% Predicado para realizar las operaciones
+operar(suma(A, B), Resultado) :-
+    Resultado is A + B.
+
+operar(resta(A, B), Resultado) :-
+    Resultado is A - B.
+
+operar(multiplicacion(A, B), Resultado) :-
+    Resultado is A * B.
+
+operar(division(A, B), Resultado) :-
+    B =\= 0,
+    Resultado is A / B.
+operar(division(_, _), _) :-
+    write('Error: división por cero.'), nl.
+
+% Llamada al predicado principal para iniciar la calculadora
+:- calcular.
