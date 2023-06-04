@@ -1,0 +1,41 @@
+program Calculadora;
+
+var
+  num1, num2, resultado: real;
+  opcion: char;
+
+begin
+  writeln('Calculadora');
+  writeln('-----------');
+  
+  write('Ingrese el primer número: ');
+  readln(num1);
+  
+  write('Ingrese el segundo número: ');
+  readln(num2);
+  
+  writeln('Elija una operación:');
+  writeln('1. Suma (+)');
+  writeln('2. Resta (-)');
+  writeln('3. Multiplicación (*)');
+  writeln('4. División (/)');
+  
+  write('Opción: ');
+  readln(opcion);
+  
+  case opcion of
+    '+': resultado := num1 + num2;
+    '-': resultado := num1 - num2;
+    '*': resultado := num1 * num2;
+    '/': resultado := num1 / num2;
+    else
+      begin
+        writeln('Opción inválida');
+        exit;
+      end;
+  end;
+  
+  writeln('El resultado es: ', resultado:0:2);
+  
+  readln;
+end.
