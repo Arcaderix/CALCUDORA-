@@ -1,0 +1,113 @@
+section .data
+    mensaje1 db "Ingrese el primer número: ", 0
+    mensaje2 db "Ingrese el segundo número: ", 0
+    mensaje3 db "El resultado es: ", 0
+
+section .bss
+    num1 resb 10
+    num2 resb 10
+    resultado resb 10
+
+section .text
+    global _start
+
+_start:
+    ; Imprimir mensaje para ingresar el primer número
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mensaje1
+    mov edx, 20
+    int 0x80
+
+    ; Leer el primer número
+    mov eax, 3
+    mov ebx, 0
+    mov ecx, num1
+    mov edx, 10
+    int 0x80
+
+    ; Imprimir mensaje para ingresar el segundo número
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mensaje2
+    mov edx, 20
+    int 0x80
+
+    ; Leer el segundo número
+    mov eax, 3
+    mov ebx, 0
+    mov ecx, num2
+    mov edx, 10
+    int 0x80
+
+    ; Convertir los números de cadena a enteros
+    mov eax, 0
+    mov esi, num1
+    call convertir_a_entero
+    mov ebx, eax
+
+    mov eax, 0
+    mov esi, num2
+    call convertir_a_entero
+    mov edx, eax
+
+    ; Sumar los números
+    add ebx, edx
+
+    ; Convertir el resultado a cadena
+    mov eax, ebx
+    mov esi, resultado
+    call convertir_a_cadena
+
+    ; Imprimir el resultado
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mensaje3
+    mov edx, 20
+    int 0x80
+
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, resultado
+    mov edx, 10
+    int 0x80
+
+    ; Terminar el programa
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+
+convertir_a_entero:
+    xor eax, eax
+    xor edi, edi
+
+    convertir_loop:
+        mov bl, byte [esi]
+        cmp bl, 0x0A
+        je convertir_fin
+        imul eax, 10
+        sub bl, '0'
+        add eax, ebx
+        inc esi
+        jmp convertir_loop
+
+    convertir_fin:
+        ret
+
+convertir_a_cadena:
+    xor ebx, ebx
+    xor ecx, ecx
+
+    convertir_cadena_loop:
+        xor edx, edx
+        mov eax, 10
+        div ebx
+        add edx, '0'
+        dec esi
+        mov byte [esi], dl
+        inc ecx
+        test eax, eax
+        jnz convertir_cadena_loop
+
+    mov byte [esi-1], cl
+    ret
