@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo "Calculadora"
+echo "-----------"
+
+echo -n "Ingrese el primer número: "
+read num1
+
+echo -n "Ingrese el segundo número: "
+read num2
+
+echo "Elija una operación:"
+echo "1. Suma (+)"
+echo "2. Resta (-)"
+echo "3. Multiplicación (*)"
+echo "4. División (/)"
+echo -n "Opción: "
+read opcion
+
+case $opcion in
+  1) resultado=$(echo "$num1 + $num2" | bc);;
+  2) resultado=$(echo "$num1 - $num2" | bc);;
+  3) resultado=$(echo "$num1 * $num2" | bc);;
+  4) resultado=$(echo "scale=2; $num1 / $num2" | bc);;
+  *) echo "Opción inválida"; exit;;
+esac
+
+echo "El resultado es: $resultado"
