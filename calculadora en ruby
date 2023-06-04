@@ -1,0 +1,58 @@
+def suma(a, b)
+  a + b
+end
+
+def resta(a, b)
+  a - b
+end
+
+def multiplicacion(a, b)
+  a * b
+end
+
+def division(a, b)
+  if b != 0
+    a / b
+  else
+    raise "Error: división por cero"
+  end
+end
+
+def calcular(operacion, a, b)
+  case operacion
+  when "suma"
+    resultado = suma(a, b)
+  when "resta"
+    resultado = resta(a, b)
+  when "multiplicacion"
+    resultado = multiplicacion(a, b)
+  when "division"
+    resultado = division(a, b)
+  else
+    raise "Error: operación no válida"
+  end
+  resultado
+end
+
+puts "Bienvenido a la calculadora en Ruby."
+
+loop do
+  puts "Ingrese la operación (suma, resta, multiplicacion, division):"
+  operacion = gets.chomp
+  break if operacion == "salir"
+  
+  puts "Ingrese el primer número:"
+  num1 = gets.chomp.to_f
+  
+  puts "Ingrese el segundo número:"
+  num2 = gets.chomp.to_f
+  
+  begin
+    resultado = calcular(operacion, num1, num2)
+    puts "El resultado es: #{resultado}"
+  rescue => e
+    puts e.message
+  end
+end
+
+puts "Gracias por usar la calculadora en Ruby. ¡Hasta luego!"
