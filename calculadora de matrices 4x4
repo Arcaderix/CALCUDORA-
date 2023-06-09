@@ -1,0 +1,38 @@
+#include <iostream>
+#include <fstream>
+
+const int ROWS = 4;
+const int COLS = 4;
+
+void guardarMatrizEnArchivo(const int matriz[ROWS][COLS]) {
+    std::ofstream archivo("matriz.txt");
+    if (archivo.is_open()) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                archivo << matriz[i][j] << " ";
+            }
+            archivo << std::endl;
+        }
+        archivo.close();
+        std::cout << "Matriz guardada en el archivo matriz.txt" << std::endl;
+    } else {
+        std::cout << "No se pudo abrir el archivo" << std::endl;
+    }
+}
+
+int main() {
+    int matriz[ROWS][COLS];
+
+    std::cout << "Ingrese los valores de la matriz 4x4:" << std::endl;
+
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            std::cout << "Ingrese el valor para la posición [" << i << "][" << j << "]: ";
+            std::cin >> matriz[i][j];
+        }
+    }
+
+    guardarMatrizEnArchivo(matriz);
+
+    return 0;
+}
